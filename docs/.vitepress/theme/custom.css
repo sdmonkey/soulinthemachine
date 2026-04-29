@@ -1,0 +1,89 @@
+/* SoulInTheMachine — terminal-leaning theme with axis-group colors */
+
+:root {
+  --vp-font-family-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* Light theme — saturated medium tones for visibility on white */
+  --soul-build:       #0d9488;  /* teal 600 */
+  --soul-verify:      #b45309;  /* amber 700 */
+  --soul-communicate: #be185d;  /* pink 700 */
+  --soul-operate:     #c2410c;  /* orange 700 */
+}
+
+.dark {
+  /* Dark theme — lighter shades for visibility on dark */
+  --soul-build:       #5eead4;  /* teal 300 */
+  --soul-verify:      #fbbf24;  /* amber 400 */
+  --soul-communicate: #f0abfc;  /* fuchsia 300 */
+  --soul-operate:     #fb923c;  /* orange 400 */
+
+  --vp-c-brand-1: #5eead4;
+  --vp-c-brand-2: #2dd4bf;
+  --vp-c-brand-3: #14b8a6;
+  --vp-c-brand-soft: rgba(94, 234, 212, 0.14);
+}
+
+/* AxisGlyph float layout for the schema page.
+ * Source order is: glyph -> H3 -> prose. The glyph itself clears past prior
+ * floats, then floats right; the H3 follows in normal flow next to it on wide
+ * screens. On narrow screens the float is dropped, putting glyph above title. */
+.vp-doc .axis-glyph {
+  float: right;
+  clear: both;
+  margin: 0 0 1rem 1.25rem;
+  shape-outside: circle();
+}
+
+/* H2 group dividers must clear past any still-floating glyph from the previous group */
+.vp-doc h2 {
+  clear: both;
+}
+
+/* Schema-page hero radar — small, decorative, floats next to intro paragraph */
+.vp-doc .schema-hero-radar {
+  float: right;
+  margin: 0 0 1.5rem 1.5rem;
+  shape-outside: circle();
+}
+
+@media (max-width: 720px) {
+  .vp-doc .axis-glyph,
+  .vp-doc .schema-hero-radar {
+    float: none;
+    display: block;
+    margin: 1rem auto;
+  }
+}
+
+/* Sidebar: two-line soul entries — archetype on line 1, "Think: X" smaller below */
+.VPSidebarItem .VPLink[href^="/souls/"] .text {
+  white-space: pre-line;
+  line-height: 1.35;
+  /* These styles apply to ALL lines; ::first-line below restores the archetype line */
+  font-size: 0.78em;
+  font-weight: 400;
+  color: var(--vp-c-text-3, var(--vp-c-text-2));
+  letter-spacing: 0.02em;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-style: italic;
+}
+
+.VPSidebarItem .VPLink[href^="/souls/"] .text::first-line {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--vp-c-text-1);
+  letter-spacing: normal;
+  font-family: var(--vp-font-family-base);
+  font-style: normal;
+}
+
+/* The Gallery link itself shouldn't get the two-line treatment — only individual souls */
+.VPSidebarItem .VPLink[href="/souls/"] .text {
+  white-space: normal;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--vp-c-text-1);
+  letter-spacing: normal;
+  font-family: var(--vp-font-family-base);
+  font-style: normal;
+}

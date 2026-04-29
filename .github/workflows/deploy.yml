@@ -1,0 +1,85 @@
+# Builds and deploys the SoulInTheMachine site to GitHub Pages.
+#
+# Trigger: push to main, plus manual via the Actions tab.
+# Pipeline: validate souls → generate exports → build → upload artifact → deploy.
+#
+# Setup once in repo settings: Settings → Pages → Source = "GitHub Actions".
+#
+# For a project page (deployed at https://<user>.github.io/<repo>/), edit the
+# VITEPRESS_BASE env below to match your repository name. For a user/org page
+# (https://<user>.github.io/) or a custom domain, set it to '/'.
+
+name: Deploy site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Avoid concurrent deploys clobbering each other; cancel in-progress on new push.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+# Opt JavaScript-based actions (checkout, setup-node, configure-pages, etc.) into
+# Node 24 now. This is the GitHub-Actions default starting June 2, 2026 — setting
+# it explicitly silences the Node 20 deprecation warnings until then. Once the
+# default flips, this line becomes a no-op (safe to leave or remove).
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      # Change this if your repo name differs, or set to '/' for a user/org/custom-domain page.
+      VITEPRESS_BASE: /soulinthemachine/
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate souls
+        run: npm run validate
+
+      - name: Build site
+        run: npm run docs:build
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+        with:
+          # Auto-enable Pages on first run so the repo doesn't require a
+          # manual Settings → Pages → "GitHub Actions" toggle. Idempotent.
+          enablement: true
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/.vitepress/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

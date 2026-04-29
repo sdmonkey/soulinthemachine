@@ -1,0 +1,20 @@
+{
+  "name": "soul-in-the-machine",
+  "version": "0.1.0",
+  "description": "A registry of agent personality profiles for AI automation roles.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prepare-exports": "node scripts/generate-exports.mjs",
+    "validate": "node scripts/validate-souls.mjs",
+    "test": "npm run validate",
+    "docs:dev": "npm run prepare-exports && vitepress dev docs",
+    "docs:build": "npm run validate && npm run prepare-exports && vitepress build docs",
+    "docs:preview": "vitepress preview docs"
+  },
+  "devDependencies": {
+    "gray-matter": "^4.0.3",
+    "vitepress": "^1.6.3",
+    "vue": "^3.5.13"
+  }
+}
