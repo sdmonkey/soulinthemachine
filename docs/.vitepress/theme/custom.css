@@ -87,3 +87,59 @@
   font-family: var(--vp-font-family-base);
   font-style: normal;
 }
+
+/* Discreet "Star on GitHub" CTA at the bottom of the home page. Pure CSS pill,
+ * no external script. Sits below HomeRadarShowcase as a soft "if you got this
+ * far and like it…" gesture. The star icon picks up GitHub's gold-yellow on
+ * hover; otherwise the pill is muted and matches the site's terminal aesthetic. */
+.star-cta-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0 3.5rem;
+}
+
+.star-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 1rem;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 999px;
+  background: var(--vp-c-bg-soft);
+  color: var(--vp-c-text-2);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  text-decoration: none !important;
+  transition:
+    border-color 0.18s ease,
+    color 0.18s ease,
+    background 0.18s ease,
+    transform 0.18s ease;
+}
+
+.star-cta:hover,
+.star-cta:focus-visible {
+  border-color: #fbbf24;
+  color: var(--vp-c-text-1);
+  background: var(--vp-c-bg);
+  outline: none;
+  text-decoration: none !important;
+  transform: translateY(-1px);
+}
+
+.star-cta-icon {
+  font-size: 1rem;
+  line-height: 1;
+  color: #fbbf24;
+  transition: transform 0.18s ease;
+}
+
+.star-cta:hover .star-cta-icon,
+.star-cta:focus-visible .star-cta-icon {
+  transform: scale(1.15) rotate(-8deg);
+}
+
+.star-cta-label {
+  font-weight: 500;
+}

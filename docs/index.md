@@ -48,3 +48,16 @@ Each soul here leans on a *Think:* inspiration line without directly impersonati
 A note on confidence: the claims on this site sit at varying levels of support — some are well-established LLM behaviors, some are observational patterns we've named, some are design opinions, and some are subjective interpretations. See [Honesty about Claims](/honesty) for the breakdown.
 
 <HomeRadarShowcase />
+
+<div class="star-cta-wrap">
+  <a
+    class="star-cta"
+    href="https://github.com/sdmonkey/soulinthemachine"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Star sdmonkey/soulinthemachine on GitHub"
+  >
+    <span class="star-cta-icon" aria-hidden="true">★</span>
+    <span class="star-cta-label">Star this on GitHub</span>
+  </a>
+</div>
