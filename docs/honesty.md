@@ -1,5 +1,6 @@
 ---
 title: Honesty about Claims
+description: "What's research-supported, what's observational, what's design opinion, and what's interpretation. The epistemic provenance of every claim on this site."
 ---
 
 # Honesty about Claims

@@ -1,5 +1,6 @@
 ---
 title: Souls
+description: "Browse 15 starter agent persona archetypes — from The Bitter Mentor to The Patient Explainer — each scored on the 10-axis functional radar. Search, filter by use case, and drill into full profiles."
 ---
 
 # The Gallery

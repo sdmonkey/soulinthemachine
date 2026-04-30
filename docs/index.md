@@ -1,5 +1,6 @@
 ---
 layout: home
+description: "A registry of agent personality profiles for AI automation roles. Predictable unpredictability via designed dispositions — 15 starter souls scored on a 10-axis radar, with friction disclosure, soul-weaving tools, and copy-pasteable system prompts."
 
 hero:
   name: "SoulInTheMachine"
@@ -34,9 +35,9 @@ features:
 
 A sophisticated evolution of the soul-as-markdown concept. By framing the `soul.md` as a "Biological Logic Layer" rather than just a prompt, we are addressing the most difficult part of AI Agency: **Predictable Unpredictability.**
 
-If you've worked with enough autonomous agents, with or without defined souls, you have undoubtedly encountered this challenge. When an agent has no soul definition, their personality is often agreeable to a fault and their behavior unpredictable. With a defined soul, an agent becomes more consistent — but also more extreme. With the correct alignment, that extremity can be focused and turned into an advantage.
+If you've worked with enough autonomous agents, you have undoubtedly encountered this challenge. An agent without a defined soul is often agreeable to a fault, and its behavior unpredictable in shape — every session, you find out what it will do by watching it do it. With a defined soul, the agent becomes more consistent *and* more extreme: you still don't know exactly what it will say, but you know exactly *how* it will go off-script.
 
-The idea that traits "bubble up" (even when inconvenient) is, in our reading, the direction high-level agent frameworks are evolving. A security auditor with a "Paranoid" flaw is more effective than an auditor that relies only on its underlying training. That same trait, however, would make the agent less effective at HR tasks.
+That's **predictable unpredictability** — the trade the entire project is built around. A baseline assistant tells you it will *try*. [The Compliance Snitch](/souls/the-compliance-snitch) tells you there's nothing it won't surface, including what you'd rather it kept quiet. [The Bitter Mentor](/souls/the-bitter-mentor) tells you the review will land harder than the author wanted. [The Assertive Counselor](/souls/the-assertive-counselor) tells you the opinion will be shared and don't even try to ignore it. The traits "bubble up" even when inconvenient — and that bubble-up is exactly what makes the soul effective for the role you chose it for. The framework's (and your) job isn't to file off the flaw — it's to match the trait to the task.
 
 ## Why anchor to known characters
 

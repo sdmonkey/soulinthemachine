@@ -1,5 +1,6 @@
 ---
 title: Soul Weaver
+description: "Build a new agent persona interactively. Live radar preview, real-time validation, AI-assisted authoring round-trip, downloadable soul.md. The on-ramp for contributing to the SoulInTheMachine registry."
 aside: false
 ---
 

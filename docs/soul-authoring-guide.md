@@ -1,5 +1,6 @@
 ---
 title: Soul Authoring Guide
+description: "How to author an agent persona profile. Naming conventions, scoring discipline (the §5 rules), and the differentiating skill: writing flaws that bubble up under stress."
 ---
 
 # Soul Authoring Guide

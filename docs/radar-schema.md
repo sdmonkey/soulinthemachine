@@ -1,5 +1,6 @@
 ---
 title: The 10-Axis Functional Radar
+description: "The rubric scoring AI agent personas across Build, Verify, Communicate, and Operate dispositions. Calibration anchors, scoring discipline rules, and per-axis illustrations."
 ---
 
 # The 10-Axis Functional Radar

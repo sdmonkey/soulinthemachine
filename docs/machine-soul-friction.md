@@ -1,5 +1,6 @@
 ---
 title: Machine-Soul Friction
+description: "Seven categories where an agent persona's design intent collides with the LLM substrate — helpfulness pull, memory boundary, voice sanitization, tool dependency, and more. Per-soul disclosure, honest about the gap."
 ---
 
 # Machine-Soul Friction
