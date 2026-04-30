@@ -130,7 +130,16 @@ export default defineConfig({
   head: [
     ['meta', { name: 'theme-color', content: '#14b8a6' }],
     ['meta', { name: 'application-name', content: SITE_TITLE }],
-    ['meta', { property: 'og:site_name', content: SITE_TITLE }]
+    ['meta', { property: 'og:site_name', content: SITE_TITLE }],
+
+    // Atkinson Hyperlegible — applied via CSS to the hero wordmark + nav title
+    // only (not body), where the lowercase-l / uppercase-I collision in
+    // "SoulInTheMachine" is most visible. Body stays on Inter (VitePress's
+    // bundled default). preconnect saves a round-trip; font-display: swap
+    // keeps text legible during the brief load window.
+    ['link', { rel: 'preconnect', href: 'https://fonts.googleapis.com' }],
+    ['link', { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' }],
+    ['link', { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap' }]
   ],
 
   // Auto-generated sitemap.xml at the deployed root, used by search engines.

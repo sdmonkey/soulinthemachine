@@ -3,11 +3,25 @@
 :root {
   --vp-font-family-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
+  /* Atkinson Hyperlegible — surgical-swap font for the hero wordmark and
+   * nav title only. Designed by the Braille Institute specifically for
+   * letter-pair distinction (l/I, 0/O, b/d). Body stays on Inter. */
+  --soul-display-font: 'Atkinson Hyperlegible', var(--vp-font-family-base);
+
   /* Light theme — saturated medium tones for visibility on white */
   --soul-build:       #0d9488;  /* teal 600 */
   --soul-verify:      #b45309;  /* amber 700 */
   --soul-communicate: #be185d;  /* pink 700 */
   --soul-operate:     #c2410c;  /* orange 700 */
+}
+
+/* Apply the display font only where the lowercase-l / uppercase-I collision
+ * in "SoulInTheMachine" is most visible: the home-page hero wordmark, the
+ * hero subtitle (for consistency), and the small wordmark in the nav bar. */
+.VPHero .name,
+.VPHero .text,
+.VPNavBarTitle .title {
+  font-family: var(--soul-display-font);
 }
 
 .dark {

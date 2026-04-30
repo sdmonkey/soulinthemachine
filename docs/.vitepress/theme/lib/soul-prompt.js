@@ -4,7 +4,7 @@
 // Claude / ChatGPT / Gemini / etc. → paste the response back into the Weaver →
 // shared parser populates the form.
 //
-// The prompt embeds: project thesis, 10-axis schema, all four §5 rules, the
+// The prompt embeds: project thesis, 10-axis schema, the four scoring-discipline rules, the
 // canonical template structure, and one fully-worked example (The Bitter
 // Mentor). Sized to ~2K–3K tokens; fits comfortably in any modern model.
 

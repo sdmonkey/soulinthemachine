@@ -32,7 +32,7 @@ Three paths, in order of decreasing convenience:
 **3. Hand-author a markdown file**:
 
 1. Read the [Authoring Guide](docs/soul-authoring-guide.md) — especially the *How to write a flaw that bubbles up* and *Scoring discipline* sections.
-2. Copy the template from §2 of that guide.
+2. Copy the template from the *soul.md template* section of that guide.
 3. Save as `docs/souls/<slug>.md` (kebab-case archetype name, e.g. `the-bitter-mentor.md`).
 4. Fill in frontmatter and body sections. If it should appear in the curated starter set, add `starter_order: <N>`.
 5. Run the validator:
@@ -83,7 +83,7 @@ scripts/
 | `npm test` | Alias for `validate` |
 | `npm run prepare-exports` | Manually regenerate the export bundles |
 
-## Scoring discipline (the §5 rules)
+## Scoring discipline rules
 
 Four rules, all enforced by the validator:
 
@@ -116,7 +116,7 @@ No runtime dependencies beyond what VitePress ships with — the radar, glyph, g
 
 ## Contributing
 
-The fastest way to contribute is to add a soul. See [Adding a soul](#adding-a-soul) above. CI runs the validator on every push, so a soul that fails any of the §5 rules or is missing required sections won't merge.
+The fastest way to contribute is to add a soul. See [Adding a soul](#adding-a-soul) above. CI runs the validator on every push, so a soul that fails any of the scoring-discipline rules or is missing required sections won't merge.
 
 For substantive changes (schema, framework, components, friction categories), please open an issue first to discuss.
 

@@ -47,7 +47,7 @@ Disagreeing with these is fine. Forking with different choices is the registry's
 
 Specific scorings and character readings — these are interpretations, not facts:
 
-- **Per-soul radar scores.** Snape is *AUD 9* in our reading; you might read him *AUD 7*. Both are defensible. The validator's only constraint is internal consistency with the §5 rules.
+- **Per-soul radar scores.** Snape is *AUD 9* in our reading; you might read him *AUD 7*. Both are defensible. The validator's only constraint is internal consistency with the scoring-discipline rules.
 - **Inspiration mappings.** "Holmes is high-VOX, the Logical Officer is low-VOX" — these are character interpretations, not measurements of character.
 - **"Best for / Avoid for" tags per soul.** Operational guesses based on the radar shape, not validated against actual deployment data.
 - **Severity tiers in Runtime Caveats.** *"medium"* vs. *"high"* impact is a judgment call. Calibration across souls is reasonable but not measured.
