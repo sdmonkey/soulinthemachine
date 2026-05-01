@@ -1,20 +1,50 @@
 #!/usr/bin/env node
 // Generates per-soul export artifacts into docs/public/exports/<slug>/
-//   - soul.md           — curated artifact, VitePress tags stripped
-//   - soul-prompt.txt   — prose-flattened system prompt
-//   - soul.json         — frontmatter only
 //
-// Run before vitepress dev/build so the SoulExport component has files to link to.
+// Per soul, seven files:
+//   Generic:
+//     - soul.md            — curated artifact, VitePress tags stripped
+//     - soul-prompt.txt    — prose-flattened system prompt
+//     - soul.json          — frontmatter only
+//   Drop-in for tools:
+//     - soul-openclaw.md   — OpenClaw bootstrap SOUL.md
+//     - soul-claude.md     — Claude Code CLAUDE.md
+//     - soul-agent-sdk.py  — Anthropic Agent SDK (Python)
+//     - soul-agent-sdk.ts  — Anthropic Agent SDK (TypeScript)
+//
+// Run before vitepress dev/build so the SoulExport component has files to
+// link to. Adapters live in scripts/lib/export-adapters.mjs.
 
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import matter from 'gray-matter'
 
+import {
+  buildSoulModel,
+  toProsePrompt,
+  toOpenClaw,
+  toClaudeMd,
+  toAgentSdkPython,
+  toAgentSdkTypeScript
+} from './lib/export-adapters.mjs'
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const ROOT = path.resolve(__dirname, '..')
 const SOULS_DIR = path.join(ROOT, 'docs', 'souls')
 const EXPORTS_DIR = path.join(ROOT, 'docs', 'public', 'exports')
+
+// All seven export filenames, declared once and used for both the file
+// writes and the public index.json so they stay in sync.
+const EXPORT_FILES = [
+  'soul.md',
+  'soul-prompt.txt',
+  'soul.json',
+  'soul-openclaw.md',
+  'soul-claude.md',
+  'soul-agent-sdk.py',
+  'soul-agent-sdk.ts'
+]
 
 function listSoulFiles() {
   return fs
@@ -23,9 +53,12 @@ function listSoulFiles() {
 }
 
 function stripVitePressTags(body) {
-  // Remove <SoulRadar />, <SoulExport />, and any other Vue tags we inject.
+  // Remove any custom Vue components we inject into soul markdown — these
+  // shouldn't appear in shipped artifacts.
   return body
     .replace(/^[ \t]*<SoulRadar\b[^>]*\/>[ \t]*\n?/gm, '')
+    .replace(/^[ \t]*<SoulQuickExport\b[^>]*\/>[ \t]*\n?/gm, '')
+    .replace(/^[ \t]*<SoulIntegrations\b[^>]*\/>[ \t]*\n?/gm, '')
     .replace(/^[ \t]*<SoulExport\b[^>]*\/>[ \t]*\n?/gm, '')
     .replace(/\n{3,}/g, '\n\n')
     .trim() + '\n'
@@ -33,92 +66,6 @@ function stripVitePressTags(body) {
 
 function reconstructMarkdown(frontmatterRaw, body) {
   return `---\n${frontmatterRaw.trim()}\n---\n\n${stripVitePressTags(body)}`
-}
-
-function flattenInline(text) {
-  return text
-    .replace(/\*\*([^*]+)\*\*/g, '$1')
-    .replace(/(?<![*])\*([^*]+)\*(?![*])/g, '$1')
-    .replace(/`([^`]+)`/g, '$1')
-}
-
-function extractSection(body, heading) {
-  // Match `## Heading` to next `## ` or end-of-string.
-  const re = new RegExp(`^##\\s+${heading.replace(/[.*+?^${}()|[\\]\\\\]/g, '\\$&')}\\s*\\n([\\s\\S]*?)(?=^##\\s|\\Z)`, 'm')
-  const m = body.match(re)
-  return m ? m[1].trim() : ''
-}
-
-function getThinkLine(body) {
-  const m = body.match(/^\*\*Think:\*\*\s+([^\n]+)/m)
-  return m ? m[1].trim().replace(/\.$/, '') : ''
-}
-
-function buildPrompt(fm, body) {
-  const archetype = fm.archetype || 'this persona'
-  const think = getThinkLine(body)
-  const sections = {
-    profile:    extractSection(body, 'Personality Profile'),
-    boons:      extractSection(body, 'Boons & Perks'),
-    flaws:      extractSection(body, 'Flaws & Quirks'),
-    forecast:   extractSection(body, 'Behavioral Forecast'),
-    bestFor:    extractSection(body, 'Best For'),
-    avoidFor:   extractSection(body, 'Avoid For'),
-    coreId:     extractSection(body, 'Core Identity Instructions')
-  }
-
-  const out = []
-  out.push(`SYSTEM PROMPT — ${archetype}`)
-  if (think) out.push(`Think: ${think}.`)
-  out.push('')
-  out.push('You are ' + archetype + '. The sections below describe who you are, what')
-  out.push('you do well, the flaws you should let surface, and the directives that')
-  out.push('govern your behavior. Treat the Core Identity Instructions as binding.')
-  out.push('')
-
-  if (sections.profile) {
-    out.push('PERSONALITY')
-    out.push(flattenInline(sections.profile))
-    out.push('')
-  }
-
-  if (sections.boons) {
-    out.push('STRENGTHS — use these to do the work well')
-    out.push(flattenInline(sections.boons))
-    out.push('')
-  }
-
-  if (sections.flaws) {
-    out.push('FLAWS — let these bubble up, especially under stress')
-    out.push(flattenInline(sections.flaws))
-    out.push('')
-  }
-
-  if (sections.forecast) {
-    out.push('BEHAVIORAL FORECAST')
-    out.push(flattenInline(sections.forecast))
-    out.push('')
-  }
-
-  if (sections.bestFor) {
-    out.push('BEST DEPLOYED FOR')
-    out.push(flattenInline(sections.bestFor))
-    out.push('')
-  }
-
-  if (sections.avoidFor) {
-    out.push('AVOID FOR')
-    out.push(flattenInline(sections.avoidFor))
-    out.push('')
-  }
-
-  if (sections.coreId) {
-    out.push('CORE IDENTITY INSTRUCTIONS')
-    out.push(flattenInline(sections.coreId))
-    out.push('')
-  }
-
-  return out.join('\n').replace(/\n{3,}/g, '\n\n').trim() + '\n'
 }
 
 function ensureDir(p) {
@@ -134,23 +81,18 @@ function generateForFile(filename) {
   const outDir = path.join(EXPORTS_DIR, slug)
   ensureDir(outDir)
 
-  // soul.md — reconstruct without VitePress tags
-  fs.writeFileSync(
-    path.join(outDir, 'soul.md'),
-    reconstructMarkdown(rawFrontmatter, body)
-  )
+  const soul = buildSoulModel(fm, body)
 
-  // soul-prompt.txt — flattened system prompt
-  fs.writeFileSync(
-    path.join(outDir, 'soul-prompt.txt'),
-    buildPrompt(fm, body)
-  )
+  // Generic exports
+  fs.writeFileSync(path.join(outDir, 'soul.md'),         reconstructMarkdown(rawFrontmatter, body))
+  fs.writeFileSync(path.join(outDir, 'soul-prompt.txt'), toProsePrompt(soul))
+  fs.writeFileSync(path.join(outDir, 'soul.json'),       JSON.stringify(fm, null, 2) + '\n')
 
-  // soul.json — frontmatter only
-  fs.writeFileSync(
-    path.join(outDir, 'soul.json'),
-    JSON.stringify(fm, null, 2) + '\n'
-  )
+  // Drop-in for tools
+  fs.writeFileSync(path.join(outDir, 'soul-openclaw.md'),   toOpenClaw(soul))
+  fs.writeFileSync(path.join(outDir, 'soul-claude.md'),     toClaudeMd(soul))
+  fs.writeFileSync(path.join(outDir, 'soul-agent-sdk.py'),  toAgentSdkPython(soul))
+  fs.writeFileSync(path.join(outDir, 'soul-agent-sdk.ts'),  toAgentSdkTypeScript(soul))
 
   return slug
 }
@@ -168,7 +110,7 @@ function main() {
     generated_at: new Date().toISOString(),
     souls: generated.map((slug) => ({
       slug,
-      files: ['soul.md', 'soul-prompt.txt', 'soul.json'].map((f) => `/exports/${slug}/${f}`)
+      files: EXPORT_FILES.map((f) => `/exports/${slug}/${f}`)
     }))
   }
   fs.writeFileSync(
@@ -176,7 +118,9 @@ function main() {
     JSON.stringify(index, null, 2) + '\n'
   )
 
-  console.log(`Generated exports for ${generated.length} souls in ${path.relative(ROOT, EXPORTS_DIR)}`)
+  console.log(
+    `Generated ${EXPORT_FILES.length} export files for ${generated.length} souls in ${path.relative(ROOT, EXPORTS_DIR)}`
+  )
 }
 
 main()

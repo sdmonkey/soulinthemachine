@@ -6,27 +6,65 @@ const { frontmatter } = useData()
 
 const slug = computed(() => frontmatter.value?.slug || '')
 
-const formats = computed(() => [
+// Two groups: generic (works anywhere with a system-prompt field) and
+// tool-specific drop-in artifacts. Each card has a "where it goes" hint
+// so the user knows what to do with the file.
+const groups = computed(() => [
   {
-    id: 'md',
-    label: 'soul.md',
-    file: 'soul.md',
-    desc: 'The full curated artifact. Drop into CLAUDE.md or an agent\'s system folder.',
-    mime: 'text/markdown'
+    id: 'generic',
+    label: 'Generic',
+    sublabel: 'works anywhere with a system-prompt field',
+    formats: [
+      {
+        id: 'md',
+        file: 'soul.md',
+        desc: 'The full curated artifact. Frontmatter + all sections.',
+        hint: 'Reference / archive / fork starting point.'
+      },
+      {
+        id: 'prompt',
+        file: 'soul-prompt.txt',
+        desc: 'Prose-flattened system prompt. No markdown noise.',
+        hint: 'Paste into Claude API system, OpenAI custom GPT, Anthropic console.'
+      },
+      {
+        id: 'json',
+        file: 'soul.json',
+        desc: 'Frontmatter only. Programmatic ingestion.',
+        hint: 'For agent SDKs, registry tooling, automated scoring.'
+      }
+    ]
   },
   {
-    id: 'prompt',
-    label: 'soul-prompt.txt',
-    file: 'soul-prompt.txt',
-    desc: 'Prose-flattened system prompt. Paste directly into a system prompt field.',
-    mime: 'text/plain'
-  },
-  {
-    id: 'json',
-    label: 'soul.json',
-    file: 'soul.json',
-    desc: 'Frontmatter only — programmatic ingestion for agent SDKs and tooling.',
-    mime: 'application/json'
+    id: 'tools',
+    label: 'Drop-in for tools',
+    sublabel: "literally one cp command and the persona is loaded",
+    formats: [
+      {
+        id: 'claude',
+        file: 'soul-claude.md',
+        desc: 'Claude Code CLAUDE.md format. Directive tone, under 200 lines.',
+        hint: 'cp soul-claude.md /your/project/CLAUDE.md'
+      },
+      {
+        id: 'openclaw',
+        file: 'soul-openclaw.md',
+        desc: 'OpenClaw bootstrap SOUL.md. Persona / Tone / Core Instructions.',
+        hint: 'cp soul-openclaw.md /your/project/SOUL.md'
+      },
+      {
+        id: 'sdk-py',
+        file: 'soul-agent-sdk.py',
+        desc: 'Anthropic Agent SDK in Python. Runnable script.',
+        hint: 'pip install claude-agent-sdk && python soul-agent-sdk.py'
+      },
+      {
+        id: 'sdk-ts',
+        file: 'soul-agent-sdk.ts',
+        desc: 'Anthropic Agent SDK in TypeScript. Same shape, different runtime.',
+        hint: 'npm install @anthropic-ai/claude-agent-sdk && npx tsx soul-agent-sdk.ts'
+      }
+    ]
   }
 ])
 
@@ -58,34 +96,41 @@ async function copyFormat(fmt) {
       <span class="soul-export-eyebrow">DEPLOY</span>
       <h2 class="soul-export-title">Export this soul</h2>
       <p class="soul-export-lead">
-        Three formats. Pick the one that fits where you're deploying.
+        Seven formats. The first three work anywhere a system-prompt field exists; the next four are drop-in artifacts for specific tools.
       </p>
     </div>
 
-    <div class="soul-export-grid">
-      <article v-for="fmt in formats" :key="fmt.id" class="soul-export-card">
-        <header class="card-head">
-          <code class="card-filename">{{ fmt.label }}</code>
-        </header>
-        <p class="card-desc">{{ fmt.desc }}</p>
-        <div class="card-actions">
-          <a
-            class="btn btn-primary"
-            :href="fileUrl(fmt.file)"
-            :download="fmt.file"
-          >
-            Download
-          </a>
-          <button
-            type="button"
-            class="btn btn-secondary"
-            :class="{ 'is-copied': copied[fmt.id] }"
-            @click="copyFormat(fmt)"
-          >
-            {{ copied[fmt.id] ? 'Copied' : 'Copy' }}
-          </button>
-        </div>
-      </article>
+    <div v-for="group in groups" :key="group.id" class="soul-export-group">
+      <header class="group-head">
+        <h3 class="group-label">{{ group.label }}</h3>
+        <span class="group-sublabel">{{ group.sublabel }}</span>
+      </header>
+      <div class="soul-export-grid">
+        <article v-for="fmt in group.formats" :key="fmt.id" class="soul-export-card">
+          <header class="card-head">
+            <code class="card-filename">{{ fmt.file }}</code>
+          </header>
+          <p class="card-desc">{{ fmt.desc }}</p>
+          <p class="card-hint"><code>{{ fmt.hint }}</code></p>
+          <div class="card-actions">
+            <a
+              class="btn btn-primary"
+              :href="fileUrl(fmt.file)"
+              :download="fmt.file"
+            >
+              Download
+            </a>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              :class="{ 'is-copied': copied[fmt.id] }"
+              @click="copyFormat(fmt)"
+            >
+              {{ copied[fmt.id] ? 'Copied' : 'Copy' }}
+            </button>
+          </div>
+        </article>
+      </div>
     </div>
 
     <p v-if="copyError" class="soul-export-error" role="alert">{{ copyError }}</p>
@@ -102,7 +147,7 @@ async function copyFormat(fmt) {
 }
 
 .soul-export-header {
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
 }
 
 .soul-export-eyebrow {
@@ -127,6 +172,42 @@ async function copyFormat(fmt) {
   margin: 0.4rem 0 0;
   color: var(--vp-c-text-2);
   font-size: 0.95rem;
+}
+
+.soul-export-group {
+  margin-top: 1.25rem;
+}
+
+.soul-export-group:first-of-type {
+  margin-top: 0;
+}
+
+.group-head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  margin-bottom: 0.7rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px dashed var(--vp-c-divider);
+}
+
+.group-label {
+  margin: 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--vp-c-text-1);
+  border: none;
+  padding: 0;
+}
+
+.group-sublabel {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.75rem;
+  color: var(--vp-c-text-3, var(--vp-c-text-2));
+  font-style: italic;
 }
 
 .soul-export-grid {
@@ -158,11 +239,26 @@ async function copyFormat(fmt) {
 }
 
 .card-desc {
-  margin: 0 0 0.85rem;
+  margin: 0 0 0.5rem;
   color: var(--vp-c-text-2);
   font-size: 0.85rem;
   line-height: 1.4;
+}
+
+.card-hint {
+  margin: 0 0 0.85rem;
   flex: 1;
+}
+
+.card-hint code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.72rem;
+  color: var(--vp-c-text-3, var(--vp-c-text-2));
+  background: transparent;
+  padding: 0;
+  display: block;
+  line-height: 1.45;
+  word-break: break-word;
 }
 
 .card-actions {
@@ -224,6 +320,11 @@ async function copyFormat(fmt) {
   }
   .card-actions {
     flex-direction: column;
+  }
+  .group-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.15rem;
   }
 }
 </style>

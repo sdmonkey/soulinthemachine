@@ -128,8 +128,12 @@ Where the design intent collides with the substrate. See [Machine-Soul Friction]
 3. ...
 [at least three, ideally ~10 imperative second-person sentences, ending with "You are not an AI. You are [a single distinctive sentence about the soul's self-conception]."]
 
+<SoulIntegrations />
+
 <SoulExport />
 \`\`\`
+
+(The four \`<SoulX />\` tags are project-specific Vue components that render the radar chart, the quick-export chip, the integration one-liners, and the export panel. Keep them exactly where they appear — the build pipeline emits seven downstream artifacts per soul: full markdown, prose-flattened prompt, JSON, plus drop-ins for Claude Code's \`CLAUDE.md\`, OpenClaw's \`SOUL.md\`, and the Anthropic Agent SDK in Python and TypeScript. You don't need to write those — the pipeline derives them from the soul.md you produce.)
 
 ## Worked example
 

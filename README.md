@@ -10,7 +10,7 @@ A registry of agent personality profiles for AI automation roles. Built on the t
 - **10-axis functional radar schema** mapping psychological traits to operational dispositions, grouped Build / Verify / Communicate / Operate. ([`docs/radar-schema.md`](docs/radar-schema.md))
 - **Machine-Soul Friction framework** — seven categories disclosing where each soul's design intent collides with the substrate (helpfulness pull, memory boundary, no background reflection, voice sanitization, tool dependency, context window limit, persona re-grounding). ([`docs/machine-soul-friction.md`](docs/machine-soul-friction.md))
 - **Soul Weaver** — interactive form-based authoring tool with live radar preview, real-time validation, and an AI round-trip flow (describe → copy prompt → paste response → autofill). ([`docs/weave.md`](docs/weave.md))
-- **Three export formats per soul** — full markdown artifact, prose-flattened system prompt, JSON for programmatic use. Generated at build time into `docs/public/exports/<slug>/` and downloadable from each soul page.
+- **Seven export formats per soul** — three generic (full markdown, prose-flattened system prompt, JSON) plus four drop-in tool artifacts (Claude Code `CLAUDE.md`, OpenClaw `SOUL.md`, Anthropic Agent SDK Python + TypeScript). Generated at build time into `docs/public/exports/<slug>/` and downloadable from each soul page.
 - **Interactive gallery** with text search, use-case filter, score thresholds, sort by axis, and per-card mini-radars.
 - **Honesty about Claims** — explicit disclosure of which claims are research-supported vs. observational vs. design opinion vs. subjective interpretation. ([`docs/honesty.md`](docs/honesty.md))
 
@@ -20,6 +20,32 @@ A registry of agent personality profiles for AI automation roles. Built on the t
 npm install
 npm run docs:dev          # http://localhost:5173
 ```
+
+## Use a soul in your tool
+
+Every soul page builds out drop-in artifacts for the agent tools you're already using. Browse the gallery, pick a soul, scroll to *Export this soul*, and download the format that matches your tool. One command each:
+
+**Claude Code** — drop the soul into a project as `CLAUDE.md`:
+```bash
+cp soul-claude.md /your/project/CLAUDE.md
+```
+
+**OpenClaw** — drop in as `SOUL.md` next to your `BOOTSTRAP.md`:
+```bash
+cp soul-openclaw.md /your/project/SOUL.md
+```
+
+**Anthropic Agent SDK** — runnable script with the soul wired in as the system prompt and a sensible tool allowlist derived from `best_for`:
+```bash
+pip install claude-agent-sdk
+python soul-agent-sdk.py "your first prompt"
+
+# or TypeScript:
+npm install @anthropic-ai/claude-agent-sdk
+npx tsx soul-agent-sdk.ts "your first prompt"
+```
+
+For anywhere a system-prompt field exists (Claude API, OpenAI custom GPT, Anthropic console), use `soul-prompt.txt`. For programmatic ingestion, use `soul.json`.
 
 ## Adding a soul
 
@@ -53,7 +79,8 @@ docs/
     config.mjs             — site config, auto-generated sidebar, env-driven base path
     theme/
       components/          — SoulRadar, AxisGlyph, SoulGallery, SoulWeaver,
-                             SoulExport, SoulQuickExport, HomeRadarShowcase
+                             SoulExport, SoulQuickExport, SoulIntegrations,
+                             HomeRadarShowcase
       lib/
         soul-parser.js     — client-side soul.md parser (used by Weaver autofill)
         soul-prompt.js     — LLM prompt template (used by Weaver AI round-trip)
@@ -66,7 +93,9 @@ docs/
   honesty.md               — what's research-supported vs. observational vs. opinion
   souls/index.md           — gallery page (uses the SoulGallery component)
 scripts/
-  generate-exports.mjs     — pre-build: writes per-soul exports to docs/public/exports/
+  generate-exports.mjs     — pre-build: writes 7 per-soul exports to docs/public/exports/
+  lib/
+    export-adapters.mjs    — pure adapter functions for OpenClaw, Claude Code, Agent SDK formats
   validate-souls.mjs       — schema + scoring discipline + section validation for all souls
 .github/workflows/
   deploy.yml               — validate → build → deploy to GitHub Pages on push to main

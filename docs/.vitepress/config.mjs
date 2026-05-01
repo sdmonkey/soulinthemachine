@@ -13,7 +13,7 @@ const SOULS_DIR = path.resolve(__dirname, '..', 'souls')
 const SITE_HOSTNAME = 'https://sdmonkey.github.io'
 const SITE_TITLE = 'SoulInTheMachine'
 const SITE_DESCRIPTION =
-  'A registry of agent personality profiles for AI automation roles. Predictable unpredictability via designed dispositions, scored on 10 axes, with friction disclosure.'
+  'A registry of agent personality profiles for AI automation roles. Predictable unpredictability via designed dispositions, scored on 10 axes, with friction disclosure. Export options for your favorite agent frameworks or tools like OpenClaw, Anthropic, Claude Code, and AutoGen.'
 const OG_IMAGE_PATH = '/og-default.svg'
 
 // Cache for soul metadata read off disk during the build. Avoids re-parsing

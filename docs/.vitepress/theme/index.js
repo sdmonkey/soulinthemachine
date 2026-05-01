@@ -4,6 +4,7 @@ import AxisGlyph from './components/AxisGlyph.vue'
 import HomeRadarShowcase from './components/HomeRadarShowcase.vue'
 import SoulExport from './components/SoulExport.vue'
 import SoulQuickExport from './components/SoulQuickExport.vue'
+import SoulIntegrations from './components/SoulIntegrations.vue'
 import SoulGallery from './components/SoulGallery.vue'
 import SoulWeaver from './components/SoulWeaver.vue'
 import './custom.css'
@@ -16,6 +17,7 @@ export default {
     app.component('HomeRadarShowcase', HomeRadarShowcase)
     app.component('SoulExport', SoulExport)
     app.component('SoulQuickExport', SoulQuickExport)
+    app.component('SoulIntegrations', SoulIntegrations)
     app.component('SoulGallery', SoulGallery)
     app.component('SoulWeaver', SoulWeaver)
   }

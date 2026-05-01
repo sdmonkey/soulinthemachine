@@ -106,17 +106,28 @@ The copy-paste system prompt. Imperative, second person, ~10–20 lines. This is
 
 ---
 
-## 3. The three export formats
+## 3. The seven export formats
 
-Every soul page offers three downloads. The Soul Weaver generates all three from the same source.
+Every soul page offers seven downloads, split into two groups: three generic and four drop-in artifacts for specific tools. The build pipeline derives all seven from the same source — author once, deploy anywhere.
+
+**Generic** — works anywhere a system-prompt field exists:
 
 | Format | When to use | Contents |
 | --- | --- | --- |
-| **`soul.md`** (full) | The curated artifact. Drop into `CLAUDE.md`, an agent's system folder, or use as reference. | Frontmatter + full narrative + Core Identity Instructions. |
-| **`soul-prompt.txt`** (verbose) | Drop directly into a system prompt field (Claude API `system`, OpenAI custom GPT, etc.). | Prose-rendered version of the Personality Profile + Boons + Flaws + Core Identity Instructions. No frontmatter, no headings. |
-| **`soul.json`** (concise) | Programmatic ingestion: agent SDKs, registries, tooling. | Frontmatter only — archetype, slug, version, inspired_by, tags, radar, best_for, avoid_for. |
+| **`soul.md`** (full) | The curated artifact. Reference, archive, or fork starting point. | Frontmatter + full narrative + Core Identity Instructions. |
+| **`soul-prompt.txt`** (prose) | Drop directly into a system prompt field (Claude API `system`, OpenAI custom GPT, Anthropic console). | Prose-flattened Personality Profile + Boons + Flaws + Core Identity Instructions. No frontmatter, no headings. |
+| **`soul.json`** (concise) | Programmatic ingestion: agent SDKs, registries, automated scoring. | Frontmatter only — archetype, slug, version, inspired_by, tags, radar, best_for, avoid_for. |
 
-The `soul-prompt.txt` form is the answer to "how do I actually use this." Each soul page should show a copy button for it next to the Core Identity Instructions block.
+**Drop-in for tools** — literally one `cp` (or `npx`) command and the persona is loaded:
+
+| Format | When to use | Contents |
+| --- | --- | --- |
+| **`soul-claude.md`** | Claude Code. `cp soul-claude.md /your/project/CLAUDE.md`. | Directive-flavored variant under 200 lines: identity, Best For / Avoid For, Core Identity Instructions, runtime caveats. |
+| **`soul-openclaw.md`** | OpenClaw bootstrap. `cp soul-openclaw.md /your/project/SOUL.md`. | Persona / Tone / Core Instructions sections. Voice preserved; project-internal frontmatter dropped. |
+| **`soul-agent-sdk.py`** | Anthropic Agent SDK (Python). Runnable script. | Imports `claude_agent_sdk`, instantiates with the prose prompt, sets a sensible tool allowlist derived from `best_for`. |
+| **`soul-agent-sdk.ts`** | Anthropic Agent SDK (TypeScript). Same shape, different runtime. | Same wiring as the Python version, using `@anthropic-ai/claude-agent-sdk`. |
+
+The `soul-prompt.txt` form is the answer to "how do I actually use this somewhere generic." The four tool-specific drop-ins are the answer to "how do I deploy this into the tool I already use."
 
 ---
 
