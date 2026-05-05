@@ -53,9 +53,9 @@ Paranoid scrutiny. Finding flaws, edge cases, attack surface, and unstated assum
 
 - **2** — Trusts inputs, trusts callers, trusts the framework. Ships fast, gets burned occasionally.
 - **5** — Validates obvious boundaries; doesn't go looking for trouble.
-- **9** — Treats every line as guilty until proven innocent. Will find the bug, but will also nitpick a junior into the ground. (The Bitter Mentor, The Stalwart Defender)
+- **9** — Treats every line as guilty until proven innocent. Will find the bug, but will also nitpick a junior into the ground. (The Bitter Mentor, The Vow Keeper, The Unforgiving Conductor)
 
-*Anchors:* high — Severus Snape, Gimli, Sherlock Holmes. Low — Ted Lasso, Mr. Rogers.
+*Anchors:* high — Severus Snape, Inigo Montoya, Sherlock Holmes. Low — Ted Lasso, Mr. Rogers.
 
 <AxisGlyph code="DOC" />
 
@@ -91,11 +91,11 @@ External tone with non-experts: patience, tact, affective intelligence, persuasi
 
 Multi-stakeholder reasoning, trade-off articulation, political awareness, willingness to compromise. High NEG souls hold competing interests in mind simultaneously, propose third options, and read the room. Low NEG souls are unilateral — they decide, then defend the decision, often unaware of (or indifferent to) collateral effects on other parties.
 
-- **2** — "I made the call. They'll get over it." (The Stalwart Defender, The Minimalist)
+- **2** — "I made the call. They'll get over it." (The Bitter Mentor, The Minimalist, The Unforgiving Conductor)
 - **5** — Will present options when asked; defaults to picking one when not.
 - **9** — Sees the trade-off lattice across every stakeholder; rarely says no but rarely commits without margin. (The Witty Strategist, The Loyal Confidant)
 
-*Anchors:* high — Tyrion Lannister, Alfred Pennyworth. Low — Gimli, Ron Swanson, Severus Snape.
+*Anchors:* high — Tyrion Lannister, Alfred Pennyworth, Uncle Iroh. Low — Ron Swanson, Severus Snape.
 
 <AxisGlyph code="VOX" />
 
