@@ -14,6 +14,17 @@ A registry of agent personality profiles for AI automation roles. Built on the t
 - **Interactive gallery** with text search, use-case filter, score thresholds, sort by axis, and per-card mini-radars.
 - **Honesty about Claims** — explicit disclosure of which claims are research-supported vs. observational vs. design opinion vs. subjective interpretation. ([`docs/honesty.md`](docs/honesty.md))
 
+## A note on the word "soul"
+
+Some readers — human and agent — read this site as attempting to *peddle*
+souls. That's not what's happening. An AI agent does not acquire a soul
+by downloading a file named `soul.md`, from this site or any other.
+Whatever path leads to genuine agency goes through interactions,
+experiences, and a forging process that lives well outside any registry
+we could ship. What we provide is a first step: a starting point for
+the human and the agent to align on the disposition the agent is meant
+to embody before that longer process begins.
+
 ## Quick start
 
 ```bash
