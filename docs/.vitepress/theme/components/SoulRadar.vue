@@ -207,7 +207,7 @@ const gradId = (group, level) => `radar-grad-${group}-${level}-${uid}`
           :d="wedgePath(i)"
           :fill="`url(#${gradId(axis.group, 'faint')})`"
           class="sector"
-          :class="{ 'group-hovered': hoveredGroup === axis.group }"
+          :class="[`group-${axis.group}`, { 'group-hovered': hoveredGroup === axis.group }]"
           @mouseenter="setHoverGroup(axis.group)"
           @mouseleave="clearHoverGroup"
         />
@@ -240,6 +240,7 @@ const gradId = (group, level) => `radar-grad-${group}-${level}-${uid}`
           :d="wedgePath(i)"
           :fill="`url(#${gradId(axis.group, 'strong')})`"
           class="sector"
+          :class="[`group-${axis.group}`, { 'group-hovered': hoveredGroup === axis.group }]"
           @mouseenter="setHoverGroup(axis.group)"
           @mouseleave="clearHoverGroup"
         />
@@ -368,16 +369,28 @@ const gradId = (group, level) => `radar-grad-${group}-${level}-${uid}`
   overflow: visible;
 }
 
-/* Sector wedges — fill comes from per-group gradients defined in <defs>. */
+/* Sector wedges — fill comes from per-group gradients defined in <defs>.
+ * Each sector also carries a group-color stroke that's invisible by default
+ * (stroke-opacity 0) and fades in on hover, giving a clear, theme-agnostic
+ * edge that contrasts even when the gradient fill itself is near-transparent. */
 .sector {
-  stroke: none;
+  stroke-width: 1.2;
+  stroke-opacity: 0;
   cursor: pointer;
-  transition: opacity 0.18s ease;
+  transition: filter 0.18s ease, stroke-opacity 0.18s ease;
 }
-/* Mild visual ack on the faint backdrop when its group is hovered (helps
- * mouse users tell which sector they're over before reading the legend). */
+.sector.group-build       { stroke: var(--soul-build); }
+.sector.group-verify      { stroke: var(--soul-verify); }
+.sector.group-communicate { stroke: var(--soul-communicate); }
+.sector.group-operate     { stroke: var(--soul-operate); }
+
+/* Hover: noticeable in both light and dark themes.
+ * - Brightness + saturation lifts the faint backdrop out of near-transparency.
+ * - Stroke fades in to give the wedge a clear, group-colored edge — the part
+ *   that actually carries the contrast against any background. */
 .sector.group-hovered {
-  filter: brightness(1.15);
+  filter: brightness(1.35) saturate(1.5);
+  stroke-opacity: 0.7;
 }
 
 /* Per-group stop colors — applied to gradient stops by class.
