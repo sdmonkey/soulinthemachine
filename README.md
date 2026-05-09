@@ -161,3 +161,12 @@ The fastest way to contribute is to add a soul. See [Adding a soul](#adding-a-so
 For substantive changes (schema, framework, components, friction categories), please open an issue first to discuss.
 
 For epistemic context on what's stated as fact vs. opinion vs. observation, see [Honesty about Claims](docs/honesty.md).
+
+## License
+
+This repository uses a split license:
+
+- **Code** (Vue components, build scripts, validators, schemas, configuration) — [MIT](LICENSE)
+- **Content** (soul profiles, framework documentation, prose in `docs/`, exported soul artifacts) — [CC BY 4.0](LICENSE-CONTENT)
+
+In short: use the code freely, and remix the content freely with attribution.
