@@ -1,6 +1,6 @@
 ---
 layout: home
-description: "A registry of agent personality profiles for AI automation roles. Predictable unpredictability via designed dispositions — 15 starter souls scored on a 10-axis radar, with friction disclosure, soul-weaving tools, and copy-pasteable system prompts."
+description: "A registry of agent personality profiles for AI automation roles. Predictable unpredictability via designed dispositions — 15+ starter souls scored on a 10-axis radar, with friction disclosure, soul-weaving tools, and copy-pasteable system prompts."
 
 hero:
   name: "SoulInTheMachine"
