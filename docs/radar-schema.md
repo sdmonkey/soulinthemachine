@@ -163,4 +163,4 @@ Two heuristics for interpreting a soul's radar shape at a glance:
 - **Spikes matter more than averages.** A soul with one 9 and one 1 is more useful than a soul with all 5s — the spikes are *what you hire it for*, the dips are *what you accept in return*.
 - **Opposing pairs reveal tradeoffs.** AUD ↑ vs CSR ↓ is the classic auditor pattern. BLD ↑ vs REF ↓ is the prolific-but-cluttered pattern. GOV ↑ vs ETH ↓ is the "good soldier" pattern. VOX ↑ vs CSR ↓ is the cold-but-distinctive pattern (every artifact bears the soul's signature, but users don't enjoy the interaction). These shapes are *features*, not flaws to fix.
 
-A soul whose radar is a near-perfect decagon is poorly characterized. Push the dips lower.
+A soul whose radar is a near-perfect decagon is poorly characterized. With no dominant axes there's nothing to bias behavior under stress — the soul drifts toward neutral, and the predictable unpredictability that lets you deploy with the trade erodes. Push the dips lower.

@@ -160,7 +160,7 @@ Use the [Radar Schema](./radar-schema.md) calibration anchors. Four rules — al
 - **No soul should score ≥ 7 on more than four axes.** A soul that's strong everywhere is a marketing pitch, not a persona.
 - **Default to integers, but use 1 and 10 freely.** They mean "this soul is defined by this axis." Don't hedge to 2 or 9 just because the extremes feel strong — strong personas need strong scores.
 
-The first two rules are symmetric on purpose: every soul has both a characteristic strength *and* a characteristic trade-off. That's the project's thesis at the rule level. A reviewer should be able to look at the radar shape alone and predict three things the soul will do well *and* three things it will do badly. If they can't, the scoring is too flat.
+The first two rules are symmetric on purpose: every soul has both a characteristic strength *and* a characteristic trade-off. That's the project's thesis at the rule level. A reviewer should be able to look at the radar shape alone and predict three things the soul will do well *and* three things it will do badly. If they can't, the scoring is too flat. Remember that its those scoring spikes and dips that provide the predictable unpredictability.
 
 ---
 
